@@ -72,7 +72,7 @@ namespace WeddingPlanner.Controllers
 
             if (userInDb is null)
             {
-                ModelState.AddModelError ("LoginEmail", "Invalid Login");
+                ModelState.AddModelError ("LoginEmail", "Looks like you need to register, you dingbat.");
                 return View ("Index");
             }
 

@@ -27,35 +27,13 @@ namespace WeddingPlanner.Controllers
             if (userId is null)
                 return RedirectToAction ("Index", "Auth");
 
-            List<Wedding> allWeddings = _context.Weddings.Include(w => w.Guests).ThenInclude(g => g.Attending).ToList ();
-
-            var singleWedding = _context.Weddings.Where(w => w.WeddingId == 1)
-                .Include(w => w.Guests)
-                .ThenInclude(g => g.Attending)
-                .FirstOrDefault();
-
-            var guestCheck = singleWedding.Guests.Find(u => u.AttendingId == userId);
-
-            System.Console.WriteLine("####################################################################");
-            System.Console.WriteLine(guestCheck.ToString());
-
-            // foreach (var guest in singleWedding.Guests)
-            // {
-            //     System.Console.WriteLine(("###########################################################"));
-            //     System.Console.WriteLine(guest.Attending);
-            // }
-
-            foreach (var wedding in allWeddings)
-            {
-                System.Console.WriteLine ($"{wedding.WedderOne} is getting married to {wedding.WedderTwo}");
-                foreach (var guest in wedding.Guests)
-                {
-                    System.Console.WriteLine(guest.Attending.FirstName);
-                }
-            }
+            List<Wedding> allWeddings = _context.Weddings
+                .Include (w => w.Guests)
+                .ThenInclude (g => g.Attending)
+                .ToList ();
 
             string userName = HttpContext.Session.GetString ("userName");
-            ViewBag.User = _context.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            ViewBag.User = _context.Users.Where (u => u.UserId == userId).FirstOrDefault ();
             ViewBag.UserName = userName;
             ViewBag.Weddings = allWeddings;
             return View ();
@@ -115,6 +93,19 @@ namespace WeddingPlanner.Controllers
 
             _context.Guests.Add (newGuest);
             _context.SaveChanges ();
+
+            return RedirectToAction ("Index");
+        }
+
+        [HttpGet ("unrsvp/{weddingId}")]
+        public IActionResult UnRsvp (int weddingId)
+        {
+            int? userId = HttpContext.Session.GetInt32 ("userId");
+            Guest rsvp = _context.Guests
+                .FirstOrDefault (g => g.WeddingId == weddingId && g.AttendingId == userId);
+
+            _context.Remove(rsvp);
+            _context.SaveChanges();
 
             return RedirectToAction ("Index");
         }

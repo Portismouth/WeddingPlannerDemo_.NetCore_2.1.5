@@ -4,3 +4,24 @@
   <div class="col"></div>
   <div class="col"></div>
 </div>
+
+var attending = false;
+@foreach(var guest in @wedding.Guests)
+{
+    if(guest.AttendingId == @ViewBag.User.UserId)
+    {
+        attending = true;
+    }
+}
+@if(@ViewBag.User.UserId == @wedding.UserId)
+{
+    <a href="rsvp/@wedding.WeddingId">Delete</a>
+}
+else if(attending)
+{
+    <a href="rsvp/@wedding.WeddingId">Un-RSVP</a>
+}
+else 
+{
+    <a href="rsvp/@wedding.WeddingId">RVSP</a>
+}
