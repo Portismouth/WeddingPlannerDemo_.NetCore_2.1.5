@@ -1,0 +1,25 @@
+@model WeddingPlanner.ViewModels.RegistrationViewModel
+
+<form asp-action="Registration" asp-controller="Auth" method="POST">
+  <span asp-validation-for="FirstName"></span>
+  <label asp-for="FirstName"></label>
+  <input asp-for="FirstName">
+  <br>
+  <span asp-validation-for="LastName"></span>
+  <label asp-for="LastName"></label>
+  <input asp-for="LastName">
+  <br>
+  <span asp-validation-for="EmailAddress"></span>
+  <label asp-for="EmailAddress"></label>
+  <input asp-for="EmailAddress">
+  <br>
+  <span asp-validation-for="Password"></span>
+  <label asp-for="Password"></label>
+  <input asp-for="Password">
+  <span asp-validation-for="PasswordConfirmation"></span>
+  <br>
+  <label asp-for="PasswordConfirmation"></label>
+  <input asp-for="PasswordConfirmation">
+  <br>
+  <input type="submit" value="Register Now!">
+</form>

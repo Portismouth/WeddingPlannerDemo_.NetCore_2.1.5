@@ -1,0 +1,17 @@
+@model WeddingPlanner.ViewModels.AddWeddingViewModel
+<h1>hi</h1>
+<form asp-action="NewWedding" asp-controller="Wedding" method="POST">
+    <span asp-validation-for="WedderOne"></span>
+    <label asp-for="WedderOne">Wedder One</label><br>
+    <input asp-for="WedderOne"><br>
+
+    <span asp-validation-for="WedderTwo"></span>
+    <label asp-for="WedderTwo">WedderTwo</label><br>
+    <input asp-for="WedderTwo"><br>
+
+    <span asp-validation-for="Date"></span>
+    <label asp-for="Date">Date</label><br>
+    <input asp-for="Date"><br>
+
+    <input type="submit" value="submit">
+</form> 
